@@ -48,7 +48,7 @@ class CartService {
    return ;
   }
 
-   public function getCardWithData()
+   public function getCarTWithData()
    {
     $session=$this->rs->getSession();
              $cart=$session->get('cart', []);
@@ -67,7 +67,7 @@ class CartService {
 
   public function getTotal()
   {
-    $cartWithData= $this->getCardWithData();
+    $cartWithData= $this->getCarTWithData();
     $total=0;
         foreach ($cartWithData as $item) {
              $totalUnitaire=$item['produit']

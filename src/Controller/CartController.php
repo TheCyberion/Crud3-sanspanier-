@@ -15,40 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CartController extends AbstractController
 {   
     #[Route('/cart', name: 'app_cart')]
-    public function index(CartService $cs, EntityManagerInterface $manager, Request $globals): Response
+    public function index(CartService $cs, ): Response
      {
-      $cartWithData=$cs->getCardWithData();
       
-      $routeName = $globals->get('_route');
-      if($routeName == 'app_commande')
-      {
-          foreach($cartWithData as $product):
-              $commande = new Commande;
-              $prix = $product['quantite'] * $product['produit']->getPrix();
-              $commande->setDateEnregistrement(new \DateTime);
-              $commande->setQuantite($product['quantite']);
-              $commande->setMontant($prix);
-              $commande->setEtat('en cours de traitement');
-              $commande->setIdProduit($product['produit']);
-              $commande->setIdMembre($this->getUser());
-              $stock= $product['produit']->getStock();
-              $stock -= $product['quantite'];
-              $product['produit']->setStock($stock);
-              $manager->persist($commande);
-              $manager->flush();
-              
-
-              $cs->remove($product['produit']->getId());
-              
-          endforeach;
-          $this->addFlash('success', "commande a bien été enregistré !");
-          //permet de creer un message qui sera affiché une fois a l'utilisateur
-          return $this->redirectToRoute('app_app');
-      }
       
+      $cartWithData = $cs->getCartWithData();
       $total = $cs->getTotal();
-         
-
+      
      return $this->render('cart/index.html.twig', [
             'items' => $cartWithData,
              'total' => $total
@@ -71,18 +44,42 @@ class CartController extends AbstractController
      return $this->redirectToRoute('app_cart');
     }
 
-    //  #[Route("/cart/adding/{id}", name:"cart_adding")]
-    //  public function adding($id, CartService $cs) 
-    //  {
-    //      $cs->adding($id);        
-    //      return $this->redirectToRoute('app_cart');
-    //  }
-    //  #[Route("/cart/decrease/{id}", name:"cart_decrease")]
-    // public function decrease($id, CartService $cs) 
-    // {
-    //     $cs->decrease($id);        
-    //     return $this->redirectToRoute('app_cart');
-    // }
-
+    #[Route("/cart/commande", name:'app_cart')]
+    public function commande(EntityManagerInterface $manager, CartService $cs,): response
     
+    { 
+        $cartWithData=$cs->getCartWithData();
+        foreach($cartWithData as $product){}
+
+            $commande = new Commande;
+            $commande->setQuantite($product['quantite']);
+            $commande->setEtat('en cours de traitement');
+            $commande->setIdMembre($this->getUser());
+            $commande->setIdProduit($product['produit']);
+            $commande->setDateEnregistrement(new \DateTime);
+            $prixProduit= $product['produit']->getPrix();
+            $quantite = $product['quantite'];
+            $montant=$prixProduit * $quantite;
+            $commande->setMontant($montant);
+            $manager->persist($commande);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_app');
+        
+    }   
+        
+       
+
+    //   #[Route("/cart/adding/{id}", name:"cart_adding")]
+    //    public function adding($id, CartService $cs) 
+    //    {
+    //        $cs->adding($id);        
+    //       return $this->redirectToRoute('app_cart');
+    //    }
+    //    #[Route("/cart/decrease/{id}", name:"cart_decrease")]
+    //   public function decrease($id, CartService $cs) 
+    //   {
+    //       $cs->decrease($id);        
+    //       return $this->redirectToRoute('app_cart');
+    //   }
 }

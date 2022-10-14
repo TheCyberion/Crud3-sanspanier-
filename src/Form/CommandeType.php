@@ -15,7 +15,6 @@ class CommandeType extends AbstractType
             ->add('quantite')
             ->add('montant')
              ->add('etat')
-             ->add('date_enregistrement')
              ->add('id_membre')
              ->add('id_produit')
         ;

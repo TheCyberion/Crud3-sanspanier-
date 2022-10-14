@@ -63,7 +63,7 @@ class AppController extends AbstractController
         ]);
     } 
 
-    #[Route ("/commande/{id}", name:"app_cart")]
+    #[Route ("/commande/{id}", name:"app_commande")]
     public function showCommande($id, CommandeRepository $repo)
     {
         $commande = $repo->find($id);
