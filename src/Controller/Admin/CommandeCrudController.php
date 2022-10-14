@@ -3,8 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Commande;
-
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -24,9 +24,11 @@ class CommandeCrudController extends AbstractCrudController
      public function configureFields(string $pageName):iterable
     {
         return [
-             IdField::new('id')->hideOnForm,
-             AssociationField::new('membre')->renderAsNativeWidget(),
-             AssociationField::new('produit')->renderAsNativeWidget(),
+             IdField::new('id')->hideOnForm(),
+            //  TextField::new('membre'),
+            //  TextField::new('produit'),
+             AssociationField::new('id_membre')->renderAsNativeWidget(),
+             AssociationField::new('id_produit')->renderAsNativeWidget(),
              IntegerField::new('quantite'),
              MoneyField::new('montant')->setCurrency('EUR'),
              ChoiceField::new('etat')->setChoices(['en cours de traitement'=>'en cours de traitement', 'envoyée'=>'envoyée','livrée'=>'livrée']),
