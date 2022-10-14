@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppController extends AbstractController
 {
-    #[Route('/app', name: 'app_app')]
+    #[Route('/', name: 'app_app')]
     public function index(ProduitRepository $repo): Response
     {
         $produits = $repo->findAll();
