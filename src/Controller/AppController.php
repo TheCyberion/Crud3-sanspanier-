@@ -63,12 +63,12 @@ class AppController extends AbstractController
         ]);
     } 
 
-    #[Route ("/commande/{id}", name:"app_commande")]
+    #[Route ("/commande/{id}", name:"app_cart")]
     public function showCommande($id, CommandeRepository $repo)
     {
         $commande = $repo->find($id);
     
-        return $this->render("app/show_commande.html.twig", [
+        return $this->render("app/cart.html.twig", [
             'commande' => $commande
         ]);
     }

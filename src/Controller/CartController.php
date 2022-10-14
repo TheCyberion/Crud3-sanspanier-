@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
-{   #[Route("/cart/commande", name:'app_commande')]
+{   
     #[Route('/cart', name: 'app_cart')]
     public function index(CartService $cs, EntityManagerInterface $manager, Request $globals): Response
      {
@@ -71,16 +71,18 @@ class CartController extends AbstractController
      return $this->redirectToRoute('app_cart');
     }
 
-    // #[Route("/cart/adding/{id}", name:"cart_adding")]
-    // public function adding($id, CartService $cs) 
-    // {
-    //     $cs->adding($id);        
-    //     return $this->redirectToRoute('app_cart');
-    // }
-    // #[Route("/cart/decrease/{id}", name:"cart_decrease")]
+    //  #[Route("/cart/adding/{id}", name:"cart_adding")]
+    //  public function adding($id, CartService $cs) 
+    //  {
+    //      $cs->adding($id);        
+    //      return $this->redirectToRoute('app_cart');
+    //  }
+    //  #[Route("/cart/decrease/{id}", name:"cart_decrease")]
     // public function decrease($id, CartService $cs) 
     // {
     //     $cs->decrease($id);        
     //     return $this->redirectToRoute('app_cart');
     // }
+
+    
 }
