@@ -19,7 +19,6 @@ class AppController extends AbstractController
     {
         $produits = $repo->findAll();
         return $this->render('app/index.html.twig', [
-            'controller_name' => 'AppController',
             'produit'=>$produits,
         ]);
     }
